@@ -16,7 +16,7 @@ def Get_Followed_Pages(username, savedir):
     for f in range(1, max_pages):
         links = []
         url = "https://bsaber.com/songs/new/page/" + \
-            str(f) + "/?bookmarked_by=llojassd"
+            str(f) + "/?bookmarked_by=" + str(username)
         links.append(url)
         Get_Song_Links(links, savedir)
 
