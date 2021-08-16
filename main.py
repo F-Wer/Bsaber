@@ -4,8 +4,10 @@ from bs4 import BeautifulSoup
 import os
 import argparse
 
+# gets the maximum page count
 
-def Get_Followed_Pages(username, savedir):
+
+def get_Followed_Pages(username, savedir):
     url = "https://bsaber.com/songs/new/?bookmarked_by=" + str(username)
     request = requests.get(url).text
     tree = lxml.html.fromstring(request)
@@ -20,8 +22,10 @@ def Get_Followed_Pages(username, savedir):
         links.append(url)
         Get_Song_Links(links, savedir)
 
+# gets the links for the songs
 
-def Get_Song_Links(links, savedir):
+
+def get_Song_Links(links, savedir):
     for url in links:
         request = requests.get(
             url).text
@@ -29,19 +33,20 @@ def Get_Song_Links(links, savedir):
         for link in soup.find_all(
                 "a", {"class": "action post-icon bsaber-tooltip -download-zip"}, href=True):
             link_for_download = link['href']
-            Downlaod_Songs(link_for_download, savedir)
-            print(link_for_download)
+            Download_Songs(link_for_download, savedir)
+
+# downloads the songs
 
 
-def Downlaod_Songs(url, savedir, chunk_size=128):
-    print(savedir)
+def download_Songs(url, savedir, chunk_size = 128 ):
     filename = os.path.basename(url + str(".zip"))
-    print(filename)
     completeName = os.path.join(savedir, filename)
     r = requests.get(url, stream=True)
     with open(completeName, 'wb') as fd:
         for chunk in r.iter_content(chunk_size=chunk_size):
             fd.write(chunk)
+
+# parses the username and the path argument
 
 
 def parse_arg():
