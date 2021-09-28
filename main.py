@@ -7,7 +7,7 @@ import argparse
 # gets the maximum page count
 
 
-def get_Followed_Pages(username, savedir):
+def Get_Followed_Pages(username, savedir):
     url = "https://bsaber.com/songs/new/?bookmarked_by=" + str(username)
     request = requests.get(url).text
     tree = lxml.html.fromstring(request)
@@ -25,7 +25,7 @@ def get_Followed_Pages(username, savedir):
 # gets the links for the songs
 
 
-def get_Song_Links(links, savedir):
+def Get_Song_Links(links, savedir):
     for url in links:
         request = requests.get(
             url).text
@@ -38,7 +38,7 @@ def get_Song_Links(links, savedir):
 # downloads the songs
 
 
-def download_Songs(url, savedir, chunk_size = 128 ):
+def Download_Songs(url, savedir, chunk_size=128):
     filename = os.path.basename(url + str(".zip"))
     completeName = os.path.join(savedir, filename)
     r = requests.get(url, stream=True)
